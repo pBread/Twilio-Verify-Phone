@@ -14,8 +14,19 @@
       <button onclick="send()">Send Message</button>
       <button onclick="check()">Check Status</button>
     </div>
-    <div id="verification-status"></div>
+
+    <br />
+    <br />
+
+    <h2>Verification Status</h2>
+    <table id="status-table">
+      <tr>
+        <th><h3>Status</h3></th>
+        <th><h3>Date</h3></th>
+      </tr>
+    </table>
   </body>
+
   <script src="https://sdk.twilio.com/js/sync/releases/3.0.1/twilio-sync.min.js"></script>
   <script src="./script.js"></script>
 </html>

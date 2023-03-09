@@ -10,7 +10,7 @@ exports.handler = async function (context, event, callback) {
     .services(SYNC_SVC_SID)
     .documents(phone)
     .update({
-      data: { status: "received", updated: new Date().toLocaleString() },
+      data: { status: "verified", updated: new Date().toLocaleString() },
     });
 
   callback(null, "Your identity has been verified");

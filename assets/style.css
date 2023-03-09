@@ -4,3 +4,12 @@ body {
   flex-direction: column;
   padding: 50px;
 }
+
+table {
+  width: 500px;
+  border: 1px solid black;
+}
+
+th {
+  width: 50%;
+}

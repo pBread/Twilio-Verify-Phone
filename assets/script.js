@@ -3,11 +3,15 @@ let syncDoc;
 let token;
 
 const inputDiv = document.getElementById("phone-input");
-const statusDiv = document.getElementById("verification-status");
+const statusTable = document.getElementById("status-table");
 
 async function main() {
+  const params = new URLSearchParams(location.search);
+  const phone = to10DLC(params.get("phone"));
+  if (phone) document.getElementById("phone-input").value = phone;
+
   await setToken();
-  initSync();
+  await initSync();
 }
 
 async function setToken() {
@@ -35,7 +39,7 @@ async function initSyncDoc() {
   if (syncClient === undefined) return;
   if (syncDoc !== undefined) return;
 
-  const phone = getPhone();
+  const phone = to10DLC(inputDiv.value);
   if (!phone) setStatus("Invalid Phone Number");
 
   syncDoc = null;
@@ -45,7 +49,7 @@ async function initSyncDoc() {
 
       doc.on("updated", (event) => {
         console.log("doc updated", event);
-        setStatus(event.data.status);
+        setStatus(event.data.status, event.data.updated);
       });
       syncDoc = doc;
       resolve();
@@ -54,7 +58,7 @@ async function initSyncDoc() {
 }
 
 async function send() {
-  const phone = getPhone();
+  const phone = to10DLC(inputDiv.value);
   if (!phone) return setStatus("Invalid Phone Number");
   await initSyncDoc();
   syncDoc.update({ status: "sending", updated: new Date().toLocaleString() });
@@ -63,16 +67,16 @@ async function send() {
 }
 
 async function check() {
-  const phone = getPhone();
+  const phone = to10DLC(inputDiv.value);
   if (!phone) return setStatus("Invalid Phone Number");
 
   await initSyncDoc();
-  setStatus(syncDoc.data.status);
+  setStatus(syncDoc.data.status, syncDoc.data.updated);
 }
 
-function getPhone() {
+function to10DLC(str) {
   try {
-    const { area, country, prefix, line } = inputDiv.value.match(
+    const { area, country, prefix, line } = str.match(
       /^\s*(?:\+?(?<country>\d{1,3}))?[-. (]*(?<area>\d{3})[-. )]*(?<prefix>\d{3})[-. ]*(?<line>\d{4})(?: *x(\d+))?\s*$/
     ).groups;
 
@@ -82,8 +86,18 @@ function getPhone() {
   }
 }
 
-function setStatus(status) {
-  statusDiv.innerText += `\n${status}`;
+function setStatus(status, date) {
+  if (!date) date = new Date().toLocaleString();
+
+  const row = document.createElement("tr");
+  const thStatus = document.createElement("th");
+  thStatus.innerText = status;
+  const thDate = document.createElement("th");
+  thDate.innerText = date;
+
+  row.appendChild(thStatus);
+  row.appendChild(thDate);
+  statusTable.appendChild(row);
 }
 
 main();
