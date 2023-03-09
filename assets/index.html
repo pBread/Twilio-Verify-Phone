@@ -9,6 +9,12 @@
   </head>
   <body>
     <header><h1>Identity Verification</h1></header>
+    <div>
+      <input id="phone-input" />
+      <button onclick="send()">Send Message</button>
+      <button onclick="check()">Check Status</button>
+    </div>
+    <div id="verification-status"></div>
   </body>
   <script src="https://sdk.twilio.com/js/sync/releases/3.0.1/twilio-sync.min.js"></script>
   <script src="./script.js"></script>

@@ -5,17 +5,17 @@ const { ACCOUNT_SID, AUTH_TOKEN, MSG_SVC_SID, ORIGIN, SYNC_SVC_SID } =
 const client = new twilio(ACCOUNT_SID, AUTH_TOKEN);
 
 exports.handler = async function (context, event, callback) {
-  const phoneNumber = to10DLC(event.phoneNumber);
+  const phone = to10DLC(event.phone);
   const msg = await client.messages.create({
-    body: `Hello, click the following link to confirm your identity: ${ORIGIN}/track-link?phoneNumber=${phoneNumber}`,
+    body: `Hello, click the following link to confirm your identity: ${ORIGIN}/track-link?phone=${phone}`,
     messagingServiceSid: MSG_SVC_SID,
-    to: phoneNumber,
+    to: phone,
   });
 
   await client.sync
     .services(SYNC_SVC_SID)
-    .documents(phoneNumber)
-    .update({ data: { status: "sent" } });
+    .documents(phone)
+    .update({ data: { status: "sent", updated: new Date().toLocaleString() } });
 
   callback(null, msg);
 };

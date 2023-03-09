@@ -1,2 +1,6 @@
-:root {
+body {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  padding: 50px;
 }
