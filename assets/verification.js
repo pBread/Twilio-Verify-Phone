@@ -2,14 +2,39 @@ let syncClient;
 let syncDoc;
 let token;
 
+const confirmedDiv = document.getElementById("confirmed");
+const rejectedDiv = document.getElementById("rejected");
+const verificationDiv = document.getElementById("verification");
+
 const params = new URLSearchParams(location.search);
 const phone = to10DLC(params.get("phone"));
 
+/****************************************************
+ Page Actions
+****************************************************/
+async function reject() {
+  syncDoc.update({ status: "rejected", updated: new Date().toLocaleString() });
+  confirmedDiv.style = "display:none;";
+  rejectedDiv.style = "display:auto;";
+  verificationDiv.style = "display:none;";
+}
+
+async function confirm() {
+  syncDoc.update({ status: "confirmed", updated: new Date().toLocaleString() });
+  confirmedDiv.style = "display:auto;";
+  rejectedDiv.style = "display:none;";
+  verificationDiv.style = "display:none;";
+}
+
+/****************************************************
+ Initialization
+****************************************************/
 async function main() {
   if (!phone) throw Error("Invalid Phone Number");
   await setToken();
   await initSync();
-  initSyncDoc(phone);
+  await initSyncDoc(phone);
+  document.getElementById("loading").remove();
 }
 
 async function setToken() {
@@ -42,11 +67,12 @@ async function initSyncDoc(phone) {
     syncClient.document(phone).then(async (doc) => {
       console.log("doc created", doc);
 
-      doc.on("updated", (event) => {
-        console.log("doc updated", event);
-        setStatus(event.data.status, event.data.updated);
-      });
+      doc.on("updated", (event) => console.log("doc updated", event));
       syncDoc = doc;
+      await syncDoc.update({
+        status: "opened",
+        updated: new Date().toLocaleString(),
+      });
       resolve();
     });
   });

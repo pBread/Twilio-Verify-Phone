@@ -8,13 +8,26 @@
     <title>Identity Verification</title>
   </head>
   <body>
+    <div class="loading" id="loading"></div>
     <header>
       <h1>Verify Your Identity</h1>
-      <h3>Are you attempting to rent a car from Hertz?</h3>
     </header>
-    <div>
-      <button class="reject" onclick="">REJECT</button>
-      <button class="confirm" onclick="">CONFIRM</button>
+    <div id="verification">
+      <h3>Are you attempting to rent a car from Hertz?</h3>
+      <div>
+        <button class="reject" onclick="reject()">REJECT</button>
+        <button class="confirm" onclick="confirm()">CONFIRM</button>
+      </div>
+    </div>
+
+    <div id="rejected" style="display: none">
+      <h3>
+        You have denied the phone verification. We will inform the customer
+        service representative.
+      </h3>
+    </div>
+    <div id="confirmed" style="display: none">
+      <h3>Thank you! Your phone number has been verified</h3>
     </div>
   </body>
 

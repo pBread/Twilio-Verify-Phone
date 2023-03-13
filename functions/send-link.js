@@ -7,7 +7,7 @@ const client = new twilio(ACCOUNT_SID, AUTH_TOKEN);
 exports.handler = async function (context, event, callback) {
   const phone = to10DLC(event.phone);
   await client.messages.create({
-    body: `Hello, click the following link to confirm your identity: ${ORIGIN}/track-link?phone=${phone}`,
+    body: `Hello, click the following link to confirm your identity: ${ORIGIN}/verification.html?phone=${phone}`,
     messagingServiceSid: MSG_SVC_SID,
     to: phone,
   });
