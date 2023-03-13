@@ -4,38 +4,54 @@ const phoneDiv = document.getElementById("phone-input");
 const statusDiv = document.getElementById("status");
 
 async function send(channel) {
-  const phone = to10DLC(phoneDiv.value);
-  start();
+  loading(true);
 
-  await fetch(`/send?channel=${channel}&to=${phone}`).then((res) => res.text());
-  finish();
-  statusDiv.innerText = "Sent";
+  try {
+    await fetch(`/send?channel=${channel}&to=${to10DLC(phoneDiv.value)}`).then(
+      (res) => res.text()
+    );
+    setStatus("Sent");
+  } catch (error) {
+    console.error(error);
+  }
+
+  loading(false);
 }
 
 async function verify() {
-  start();
-  const phone = to10DLC(phoneDiv.value);
-  const code = codeDiv.value;
+  loading(true);
 
   try {
-    const result = await fetch(`/verify?code=${code}&to=${phone}`).then((res) =>
-      res.json()
-    );
-    if (result.status === "approved") statusDiv.innerText = "Approved!";
-    else statusDiv.innerText = "Rejected";
+    const result = await fetch(
+      `/verify?code=${codeDiv.value}&to=${to10DLC(phoneDiv.value)}`
+    ).then((res) => res.json());
+    if (result.status === "approved") setStatus("Approved");
+    else setStatus("Rejected");
   } catch (error) {
-    statusDiv.innerText = "Rejected";
+    setStatus("Rejected");
   }
 
-  finish();
+  loading(false);
 }
 
-function start() {
-  loadingDiv.style = "display:auto;";
+function setStatus(status) {
+  switch (status.toLowerCase()) {
+    case "approved":
+      statusDiv.style = "color: green";
+      break;
+    case "rejected":
+      statusDiv.style = "color: red";
+      break;
+    case "sent":
+      statusDiv.style = "color: black";
+  }
+
+  statusDiv.innerText = status;
 }
 
-function finish() {
-  loadingDiv.style = "display:none;";
+function loading(isLoading) {
+  if (isLoading) loadingDiv.style = "display:auto;";
+  else loadingDiv.style = "display:none;";
 }
 
 function to10DLC(phone) {
