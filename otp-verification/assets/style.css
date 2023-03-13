@@ -7,9 +7,8 @@ body {
   text-align: center;
 }
 
-.status-wrapper {
-  border: 1px solid rgba(0, 0, 0, 0.3);
-  padding: 0 12px;
+button {
+  cursor: pointer;
 }
 
 /* Loading Spinner */
