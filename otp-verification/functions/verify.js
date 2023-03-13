@@ -5,10 +5,10 @@ const { ACCOUNT_SID, AUTH_TOKEN, VERIFY_SVC_SID } = process.env;
 const client = new twilio(ACCOUNT_SID, AUTH_TOKEN);
 
 exports.handler = async function (context, event, callback) {
-  const code = event.code;
-  const to = to10DLC(event.to);
-
   try {
+    const code = event.code;
+    const to = to10DLC(event.to);
+
     const result = await client.verify.v2
       .services(VERIFY_SVC_SID)
       .verificationChecks.create({ code, to });

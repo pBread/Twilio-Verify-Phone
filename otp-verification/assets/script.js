@@ -1,15 +1,20 @@
+const channelDiv = document.getElementById("channel");
 const codeDiv = document.getElementById("code-input");
 const loadingDiv = document.getElementById("loading");
+const localeDiv = document.getElementById("locale");
 const phoneDiv = document.getElementById("phone-input");
 const statusDiv = document.getElementById("status");
 
-async function send(channel) {
+async function send() {
   loading(true);
 
   try {
-    await fetch(`/send?channel=${channel}&to=${to10DLC(phoneDiv.value)}`).then(
-      (res) => res.text()
-    );
+    await fetch(
+      "/send?" +
+        `channel=${channelDiv.value}` +
+        `&locale=${localeDiv.value}` +
+        `&to=${to10DLC(phoneDiv.value)}`
+    ).then((res) => res.text());
     setStatus("Sent");
   } catch (error) {
     console.error(error);
