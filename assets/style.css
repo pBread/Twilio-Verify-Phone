@@ -20,16 +20,26 @@ button {
 }
 
 /* Verification.html */
+.verification h1 {
+  font-size: 70px;
+}
+
+.verification h3 {
+  font-size: 36px;
+}
+
 .confirm {
   background-color: green;
   color: white;
   font-weight: bold;
+  font-size: 36px;
 }
 
 .reject {
   background-color: red;
   color: white;
   font-weight: bold;
+  font-size: 36px;
 }
 
 /* Loading Spinner */
