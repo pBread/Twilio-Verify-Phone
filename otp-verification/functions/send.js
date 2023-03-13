@@ -6,12 +6,12 @@ const client = new twilio(ACCOUNT_SID, AUTH_TOKEN);
 
 exports.handler = async function (context, event, callback) {
   const channel = event.channel ?? "sms";
-  const phone = to10DLC(event.phone);
+  const to = to10DLC(event.to);
 
   try {
     await client.verify.v2
       .services(VERIFY_SVC_SID)
-      .verifications.create({ channel, to: phone });
+      .verifications.create({ channel, to });
     callback(null, "success");
   } catch (error) {
     callback(error);

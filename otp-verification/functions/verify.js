@@ -6,13 +6,18 @@ const client = new twilio(ACCOUNT_SID, AUTH_TOKEN);
 
 exports.handler = async function (context, event, callback) {
   const code = event.code;
-  const to = to10DLC(event.phone);
+  const to = to10DLC(event.to);
 
-  const result = await client.verify.v2
-    .services(VERIFY_SVC_SID)
-    .verificationChecks.create({ code, to });
+  try {
+    const result = await client.verify.v2
+      .services(VERIFY_SVC_SID)
+      .verificationChecks.create({ code, to });
 
-  callback(null, result);
+    callback(null, result);
+  } catch (error) {
+    console.log(error);
+    callback(error);
+  }
 };
 
 function to10DLC(phone) {

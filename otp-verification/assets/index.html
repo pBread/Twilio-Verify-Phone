@@ -5,11 +5,21 @@
     <title>OTP Verification</title>
   </head>
   <body>
+    <div class="loading" id="loading" style="display: none"></div>
     <header><h1>Identity Verification</h1></header>
-    <div>
+
+    <div class="actions">
       <input id="phone-input" />
-      <button onclick="send()">Send Message</button>
+      <button onclick="send('sms')">Send OTP via SMS</button>
+      <button onclick="send('call')">Send OTP via Call</button>
     </div>
+
+    <div>
+      <input id="code-input" />
+      <button onclick="verify()">Verify</button>
+    </div>
+
+    <h3>Status: <span id="status">Not Sent</span></h3>
   </body>
 
   <script src="./script.js"></script>
