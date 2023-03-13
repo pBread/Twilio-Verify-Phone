@@ -35,12 +35,9 @@ async function initSync() {
   syncClient.on("tokenExpired", setToken);
 }
 
-async function initSyncDoc() {
+async function initSyncDoc(phone) {
   if (syncClient === undefined) return;
   if (syncDoc !== undefined) return;
-
-  const phone = to10DLC(inputDiv.value);
-  if (!phone) setStatus("Invalid Phone Number");
 
   syncDoc = null;
   await new Promise((resolve) => {
@@ -60,7 +57,7 @@ async function initSyncDoc() {
 async function send() {
   const phone = to10DLC(inputDiv.value);
   if (!phone) return setStatus("Invalid Phone Number");
-  await initSyncDoc();
+  await initSyncDoc(phone);
   syncDoc.update({ status: "sending", updated: new Date().toLocaleString() });
 
   await fetch("/send-link?phone=+18475070348");
@@ -70,7 +67,7 @@ async function check() {
   const phone = to10DLC(inputDiv.value);
   if (!phone) return setStatus("Invalid Phone Number");
 
-  await initSyncDoc();
+  await initSyncDoc(phone);
   setStatus(syncDoc.data.status, syncDoc.data.updated);
 }
 

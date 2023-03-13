@@ -3,6 +3,7 @@ body {
   display: flex;
   flex-direction: column;
   padding: 50px;
+  text-align: center;
 }
 
 table {
@@ -12,4 +13,21 @@ table {
 
 th {
   width: 50%;
+}
+
+button {
+  cursor: pointer;
+}
+
+/* Verification.html */
+.confirm {
+  background-color: green;
+  color: white;
+  font-weight: bold;
+}
+
+.reject {
+  background-color: red;
+  color: white;
+  font-weight: bold;
 }
