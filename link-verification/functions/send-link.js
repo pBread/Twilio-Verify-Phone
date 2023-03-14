@@ -12,12 +12,15 @@ exports.handler = async function (context, event, callback) {
     to: phone,
   });
 
-  await client.sync
-    .services(SYNC_SVC_SID)
-    .documents(phone)
-    .update({ data: { status: "sent", updated: new Date().toLocaleString() } });
-
-  callback(null, msg);
+  callback(
+    null,
+    await client.sync
+      .services(SYNC_SVC_SID)
+      .documents(phone)
+      .update({
+        data: { status: "sent", updated: new Date().toLocaleString() },
+      })
+  );
 };
 
 function to10DLC(phone) {

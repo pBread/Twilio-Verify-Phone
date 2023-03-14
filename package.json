@@ -13,8 +13,8 @@
   "name": "verify-phone",
   "private": true,
   "scripts": {
-    "dev:link": "twilio-run --ngrok=pbread --assets-folder=./link-verification/assets --functions-folder=./link-verification/functions",
-    "dev:otp": "twilio-run --ngrok=pbread --assets-folder=./otp-verification/assets --functions-folder=./otp-verification/functions"
+    "dev:link": "twilio-run --assets-folder=./link-verification/assets --functions-folder=./link-verification/functions --ngrok=",
+    "dev:otp": "twilio-run --assets-folder=./otp-verification/assets --functions-folder=./otp-verification/functions --ngrok="
   },
   "version": "0.0.0"
 }
