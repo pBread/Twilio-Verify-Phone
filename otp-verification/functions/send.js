@@ -15,6 +15,7 @@ exports.handler = async function (context, event, callback) {
       .verifications.create({ channel, locale, to });
     callback(null, "success");
   } catch (error) {
+    console.error(error);
     callback(error);
   }
 };
